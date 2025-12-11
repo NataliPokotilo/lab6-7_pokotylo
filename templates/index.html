@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+    <meta charset="utf-8">
+    <title>Tasks CRUD</title>
+</head>
+
+<body>
+    <h1>Список завдань</h1>
+
+    <p><a href="{{ url_for('add') }}">➕ Додати завдання</a></p>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Статус</th>
+            <th>Створено</th>
+            <th>Дії</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task["id"] }}</td>
+            <td>{{ task["title"] }}</td>
+            <td>{{ task["description"] }}</td>
+            <td>{{ task["status"] }}</td>
+            <td>{{ task["created_at"] }}</td>
+            <td>
+                <a href="{{ url_for('edit', item_id=task['id']) }}">✏️ Редагувати</a>
+                |
+                <form action="{{ url_for('delete', item_id=task['id']) }}" method="post" style="display:inline">
+                    <button type="submit" onclick="return confirm('Видалити?');">
+                        🗑 Видалити
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+
+</html>

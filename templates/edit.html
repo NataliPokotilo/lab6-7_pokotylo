@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% if task %}Редагування{% else %}Додавання{% endif %} завдання
+    </title>
+</head>
+
+<body>
+
+    <h1>
+        {% if task %}Редагування{% else %}Додавання{% endif %} завдання
+    </h1>
+
+    <form method="post">
+        <label>
+            Назва:<br>
+            <input type="text" name="title" value="{{ task['title'] if task else '' }}" required>
+        </label>
+        <br><br>
+
+        <label>
+            Опис:<br>
+            <textarea name="description" rows="4" cols="40">
+{{ task['description'] if task else '' }}</textarea>
+        </label>
+        <br><br>
+
+        <label>
+            Статус:<br>
+            <select name="status">
+                {% set current_status = task['status'] if task else 'new' %}
+                <option value="new" {% if current_status=='new' %}selected{% endif %}>new</option>
+                <option value="in_progress" {% if current_status=='in_progress' %}selected{% endif %}>in_progress
+                </option>
+                <option value="done" {% if current_status=='done' %}selected{% endif %}>done</option>
+            </select>
+        </label>
+        <br><br>
+
+        <button type="submit">Зберегти</button>
+    </form>
+
+    <p><a href="{{ url_for('index') }}">⬅ Повернутися до списку</a></p>
+
+</body>
+
+</html>
